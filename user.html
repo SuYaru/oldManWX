@@ -10,35 +10,30 @@
     <script type="text/javascript" src="./js/jquery.serializejson.min.js"></script>
 </head>
 <body>
-    <div class="easyui-layout" data-options="fit:true" style="height:600px">
-        <div data-options="region:'north'" style="height:35px">
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="$('#dlg').dialog('open')">添加</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">修改</a>
-            <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">删除</a>
-        </div>
-        <div data-options="region:'center',title:'用户管理',iconCls:'icon-ok',border:false" style="width:100%;height:100%">
-            <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed:true" style="width:450px;height:200px;padding:10px">
-                <form id="ff" class="easyui-form" method="post" data-options="novalidate:true,region:'center',fit:true">
-                    <div style="margin-bottom:20px">
-                        <input class="easyui-textbox" name="name" style="width:100%" data-options="label:'用户名:',required:true">
-                    </div>
-                    <div style="margin-bottom:20px">
-                        <input class="easyui-textbox" name="age" style="width:100%" data-options="label:'年龄:',required:true">
-                    </div>
-                    <div style="margin-bottom:20px">
-                        <input class="easyui-textbox" name="email" style="width:100%" data-options="label:'邮箱:',required:true,validType:'email'">
-                    </div>
-                </form>
-                <div style="text-align:center;padding:5px 0">
-                    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">Submit</a>
-                    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">Clear</a>
-                </div>
+    <table id="dg"></table>
+    <div data-options="region:'north'" data-options='fit:true'></div>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="$('#dlg').dialog('open')">添加</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">修改</a>
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-save'">删除</a>
+    </div>
+    <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed:true" style="width:450px;height:200px;padding:10px">
+        <form id="ff" class="easyui-form" method="post" data-options="novalidate:true,region:'center',fit:true">
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="name" style="width:100%" data-options="label:'用户名:',required:true">
             </div>
-            <table id="dg"></table>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="age" style="width:100%" data-options="label:'年龄:',required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="email" style="width:100%" data-options="label:'邮箱:',required:true,validType:'email'">
+            </div>
+        </form>
+        <div style="text-align:center;padding:5px 0">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">Submit</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">Clear</a>
         </div>
     </div>
-
-
+    
 
     <script>
         function submitForm(){
