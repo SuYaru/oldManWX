@@ -39,6 +39,20 @@
 
 
     <script>
+        function submitForm(){
+            $('#ff').form('submit',{
+                onSubmit:function(){
+                    //获取表单内容，传递数据
+                    if($(this).form('enableValidation').form('validate')){
+                        console.log($('#ff').serializeArray())
+                    }
+                }
+            });
+            return false;
+        }
+        function clearForm(){
+            $('#ff').form('clear');
+        }
         $('#dg').datagrid({
             url:'http://localhost:3000/users/list',
             border:false,
@@ -53,7 +67,6 @@
                 console.log(index,row)
             },
         });
-
 
     </script>
 </body>
