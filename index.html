@@ -85,7 +85,6 @@ $("#menus li a").click(function(){
     addPanel(title,link);
 })
 
-
 function addPanel(title,link){
     $('#tt').tabs('add',{
         title: title,
@@ -93,12 +92,12 @@ function addPanel(title,link){
         closable: true
     });
 }
-addPanel();
 
 $(document).ready(function(){
-    addPanel('首页','.views/main.html')
+	addPanel('首页','./views/main.html');
 })
 
 
+var globalURL = 'http://localhost:3000/';
 
 </script>
