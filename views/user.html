@@ -5,28 +5,82 @@
 	<title>Basic Layout - jQuery EasyUI Demo</title>
 	<link rel="stylesheet" type="text/css" href="../css/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="../css/themes/icon.css">
-	<script type="text/javascript" src="../js/jquery.min.js"></script>
-	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.serializejson.min.js"></script>
 </head>
 <body>
-	<table id="dg"></table>
+    <table id="dg"></table>
+    <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed:true" style="width:450px;height:200px;padding:10px">
+        <form id="ff" class="easyui-form" method="post" data-options="novalidate:true,region:'center',fit:true">
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="name" style="width:100%" data-options="label:'用户名:',required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="age" style="width:100%" data-options="label:'年龄:',required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="email" style="width:100%" data-options="label:'邮箱:',required:true,validType:'email'">
+            </div>
+        </form>
+        <div style="text-align:center;padding:5px 0">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">提交</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">清除</a>
+        </div>
+    </div>
 </body>
 </html>
 
 <script>
-$('#dg').datagrid({
-    url:'http://localhost:3000/users/list',
-    fit:'true',
-    border:false,
-    pagination:true,
-    columns:[[
-        {field:'name',title:'用户名',width:100},
-        {field:'age',title:'年龄',width:100},
-        {field:'email',title:'邮箱',width:100},
-    ]],
-    onClickRow:function(index,row){
-        console.log(index,row);
+    function submitForm(){
+        $('#ff').form('submit',{
+            onSubmit:function(){
+                //获取表单内容，传递数据
+                if($(this).form('enableValidation').form('validate')){
+                    var formData = $('#ff').serializeJSON();
+                    $.ajax({
+                        url:'http://localhost:3000/users',
+                        type:'post',
+                        data:formData
+                    }).done(function(res){
+                        console.log(res)
+                    })
+                }
+            }
+        });
+        return false;
     }
-});
+    function clearForm(){
+        $('#ff').form('clear');
+    }
+    $('#dg').datagrid({
+        url:'http://localhost:3000/users/list',
+        fit:'true',
+        border:false,
+        pagination:true,
+        toolbar:[{
+                text:'添加',
+                iconCls:'icon-add',
+                handler:function(){
+                    $('#dlg').dialog('open')
+                }
+            },{
+                text:'删除',
+                iconCls:'icon-cut',
+                handler:function(){alert('cut')}
+            },'-',{
+                text:'修改',
+                iconCls:'icon-save',
+                handler:function(){alert('save')}
+            }],
+        columns:[[
+            {field:'name',title:'用户名',width:100},
+            {field:'age',title:'年龄',width:100},
+            {field:'email',title:'邮箱',width:100},
+        ]],
+        onClickRow:function(index,row){
+            console.log(index,row);
+        }
+    });
 
 </script>
