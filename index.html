@@ -95,20 +95,10 @@ function addPanel(title,link){
 }
 addPanel();
 
+$(document).ready(function(){
+    addPanel('首页','.views/main.html')
+})
 
-$('#dg').datagrid({
-    url:'http://localhost:3000/users/list',
-    fit:'true',
-    border:false,
-    pagination:true,
-    columns:[[
-        {field:'name',title:'用户名',width:100},
-        {field:'password',title:'密码'}
-    ]],
-    onClickRow:function(index,row){
-        console.log(index,row);
-    }
-});
 
 
 </script>
