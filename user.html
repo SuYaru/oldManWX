@@ -28,7 +28,10 @@
                 {field:'name',title:'用户名',width:100},
                 {field:'age',title:'年龄',width:100},
                 {field:'email',title:'邮箱',width:100,align:'right'}
-            ]]
+            ]],
+            onClickRow:function(index,row){
+                console.log(index,row)
+            }
         });
     </script>
 </body>
