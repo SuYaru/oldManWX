@@ -9,25 +9,27 @@
 	<script type="text/javascript" src="./jquery-easyui-1.7.5/jquery.easyui.min.js"></script>
 </head>
 <body>
-	<h2>用户管理</h2>
-	<div style="margin:20px 0;"></div>
-	<div class="easyui-layout" data-options="fit:true">
-		<!-- <div data-options="region:'north'" style="height:50px"></div>
-		<div data-options="region:'south',split:true" style="height:50px;"></div>
-		<div data-options="region:'east',split:true" title="East" style="width:100px;"></div>
-		<div data-options="region:'west',split:true" title="West" style="width:100px;"></div> -->
-		<div data-options="region:'center',title:'用户管理',iconCls:'icon-ok',fit:true">
-			<table class="easyui-datagrid"
-					data-options="url:'http://localhost:3000/users/list',method:'post',border:false,singleSelect:true,fitColumns:true,pagination:true">
-				<thead>
-					<tr>
-						<th data-options="field:'name'" width="80">name</th>
-						<th data-options="field:'age'" width="100">age</th>
-						<th data-options="field:'email',align:'right'" width="80">email</th>
-				</thead>
-			</table>
-		</div>
-	</div>
+    
+        <div class="easyui-layout" data-options="fit:true">
+            <div data-options="region:'center',title:'用户管理',iconCls:'icon-ok',border:false">
+                <table id="dg"></table>
+            </div>
+        </div>
 
+
+
+    <script>
+        $('#dg').datagrid({
+            url:'http://localhost:3000/users/list',
+            border:false,
+            fit:true,
+            pagination:true,
+            columns:[[
+                {field:'name',title:'用户名',width:100},
+                {field:'age',title:'年龄',width:100},
+                {field:'email',title:'邮箱',width:100,align:'right'}
+            ]]
+        });
+    </script>
 </body>
 </html>
