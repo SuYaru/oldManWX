@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Basic Layout - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="./css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="./css/themes/icon.css">
+	<script type="text/javascript" src="./js/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/jquery.easyui.min.js"></script>
+</head>
+<body>
+
+	<div class="easyui-layout" data-options="fit:true">
+		<div data-options="region:'north'" style="height:80px">
+		</div>
+		<div data-options="region:'south',split:true" style="height:80px;">
+			<center>copyright 2019</center>
+		</div>
+		<div data-options="region:'west',split:true" title="西部世界后台管理" style="width:200px;">
+			<div id="menus" class="easyui-accordion" style="width:300px;height:200px;">
+				<div title="用户管理" data-options="iconCls:'icon-user'" style="overflow:auto;padding:10px;">
+					<a link="./views/user.html" href="javascript:void(0)">用户管理</a>
+				</div>
+				<div title="分类管理" data-options="iconCls:'icon-divice',selected:true" style="padding:10px;">
+					<a link="./views/user.html" href="javascript:void(0)">分类管理</a>
+				</div>
+				<div title="新闻管理" data-options="iconCls:'icon-news',selected:true">
+					<a link="./views/news.html" href="javascript:void(0)">新闻管理</a>
+				</div>
+				<div title="订单管理" data-options="iconCls:'icon-order'">
+					<a link="./views/order.html" href="javascript:void(0)">订单管理</a>
+				</div>
+			</div>
+		</div>
+		<div data-options="region:'center'" id="tt" class="easyui-tabs" data-options="fit:true">
+		</div>
+	</div>
+
+</body>
+</html>
+
+<script>
+$("#menus a").click(function(){
+    var link =  $(this).attr('link');
+    var title = $(this).text();
+    addPanel(title,link);
+})
+
+
+function addPanel(title,link){
+    $('#tt').tabs('add',{
+        title: title,
+        content: `<iframe src="${link}" frameborder="0" style="width:100%;height:100%"></iframe>`,
+        closable: true
+    });
+}
+$(document).ready(function(){
+	addPanel('首页','./views/main.html');
+});
+
+var gloableURL ='http://10.31.162.31:3000/';
+
+
+</script>
