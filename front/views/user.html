@@ -19,17 +19,17 @@
             <a href="#" id="removesData" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="deleteDatas()">删除</a>
         </div>
 
-        <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed: true" style="width:400px;padding:10px">
+        <div id="dlg" class="easyui-dialog" title="用户信息" data-options="iconCls:'icon-save',closed: true" style="width:400px;padding:10px">
             <form id="userform" class="easyui-form" method="post" data-options="novalidate:true">
-                <input   name="_id" style="width:100%">
+                <input   name="_id" style="width:100%;display:none;">
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="name" style="width:100%" data-options="label:'Name:',required:true">
+                    <input class="easyui-textbox" name="name" style="width:100%" data-options="label:'用户名:',required:true">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input class="easyui-passwordbox"  name="password" style="width:100%" data-options="label:'Password:',required:true">
+                    <input class="easyui-passwordbox"  name="password" style="width:100%" data-options="label:'密码:',required:true">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="age" style="width:100%" data-options="label:'Age:',required:true">
+                    <input class="easyui-textbox" name="age" style="width:100%" data-options="label:'年龄:',required:true">
                 </div>
 
             </form>
@@ -56,7 +56,7 @@
             {field:'age',title:'年龄'},
             {field:'_id',title:'操作', width:80,
                 formatter: function(value,row,index){
-                    return `<a href="javascript:void(0)" onclick="updateData('${row._id}',this)">修改</a> <a href="javascript:void(0)" onclick="deleteData('${row._id}')">删除</a>`
+                    return `<a  class="edit-a" href="javascript:void(0)" onclick="updateData('${row._id}',this)" style="display:inline-block;width:25px;height:25px;float:left;"></a> <a class="delete-a" href="javascript:void(0)" onclick="deleteData('${row._id}')" style="display:inline-block;width:25px;height:25px;float:right"></a>`
                 }
             }
         ]]
@@ -158,7 +158,7 @@
     }
 
     // 3、修改
-    function updateData(id){
+    function updateData(id,target){
         $(target).parents('.datagrid-row').siblings().
     removeClass('datagrid-row-over datagrid-row-checked datagrid-row-selected');
 

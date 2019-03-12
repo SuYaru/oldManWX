@@ -107,3 +107,9 @@
 .icon-order{
 	background:url('icons/order.png') no-repeat center center;
 }
+.edit-a{
+	background:url('icons/edit.png') no-repeat center center;
+}
+.delete-a{
+	background:url('icons/delete.png') no-repeat center center;
+}
