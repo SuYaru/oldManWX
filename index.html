@@ -85,18 +85,30 @@ $("#menus li a").click(function(){
     addPanel(title,link);
 })
 
+// function addPanel(title,link){
+//     $('#tt').tabs('add',{
+//         title: title,
+//         content: `<iframe src="${link}" frameborder="0" style="width:100%;height:100%"></iframe>`,
+//         closable: true
+//     });
+// }
+//切换窗口
 function addPanel(title,link){
-    $('#tt').tabs('add',{
+	if ($('#tt').tabs('exists', title)){
+		$('#tt').tabs('select', title);
+	}else{
+		$('#tt').tabs('add',{
         title: title,
-        content: `<iframe src="${link}" frameborder="0" style="width:100%;height:100%"></iframe>`,
+		content: `<iframe src="${link}" frameborder="0" style="width:100%;height:100%"></iframe>`,
+		iconCls:'icon-save',
         closable: true
-    });
+    	});
+	}
 }
-
-//默认打开首页
 $(document).ready(function(){
 	addPanel('首页','./views/main.html');
 })
+
 
 
 var globalURL = 'http://localhost:3000/';
