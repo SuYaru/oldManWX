@@ -84,10 +84,25 @@
             {field:'name',title:'用户名',width:100},
             {field:'age',title:'年龄',width:100},
             {field:'email',title:'邮箱',width:100},
+
+
+            //修改和删除功能
+            {field:'_id',title:'操作',width:100,
+                formatter:function(value,row,index){
+                    return `<a href="javascript:;" onclick="updateData('${row._id}')">修改</a>`
+                }
+            },
         ]],
-        onClickRow:function(index,row){
-            console.log(index,row);
-        }
     });
+
+    //修改数据函数
+    function update(id){
+        $.ajax({
+            url:`http://localost:3000/users/${id}`,
+            type:'get'
+        }).done(function(res){
+            console.log(res)
+        })
+    }
 
 </script>
