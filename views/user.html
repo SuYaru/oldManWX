@@ -11,6 +11,12 @@
 </head>
 <body>
     <table id="dg"></table>
+    <div id="tb" style="padding:2px 5px;">
+        <input id="name" label="用户名称:" style="width:100%;">
+        <a href="#" id="searchData" class="easyui-linkbutton" iconCls="icon-search">Search</a>
+        <a href="#" id="addData" class="easyui-linkbutton" data-options="iconCls:'icon-add'">Add</a>
+        <a href="#" id="removesData" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">Remove</a>
+    </div>
     <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed:true" style="width:450px;height:200px;padding:10px">
         <form id="ff" class="easyui-form" method="post" data-options="novalidate:true,region:'center',fit:true">
             <div style="margin-bottom:20px">
@@ -43,7 +49,8 @@
                         type:'post',
                         data:formData
                     }).done(function(res){
-                        console.log(res)
+                        $('#dlg').dialog('close');
+                        $('#dg').datagrid('reload')
                     })
                 }
             }
