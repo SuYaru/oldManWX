@@ -11,14 +11,15 @@
 </head>
 <body>
     <table id="dg"></table>
-    <div id="tb" style="padding:2px 5px;">
+    <!-- <div id="tb" style="padding:2px 5px;">
         <input id="name" label="用户名称:" style="width:100%;">
         <a href="#" id="searchData" class="easyui-linkbutton" iconCls="icon-search">Search</a>
         <a href="#" id="addData" class="easyui-linkbutton" data-options="iconCls:'icon-add'">Add</a>
         <a href="#" id="removesData" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">Remove</a>
-    </div>
+    </div> -->
     <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed:true" style="width:450px;height:200px;padding:10px">
         <form id="ff" class="easyui-form" method="post" data-options="novalidate:true,region:'center',fit:true">
+            <input   name="_id" style="width:100%" type="hidden">
             <div style="margin-bottom:20px">
                 <input class="easyui-textbox" name="name" style="width:100%" data-options="label:'用户名:',required:true">
             </div>
@@ -44,14 +45,27 @@
                 //获取表单内容，传递数据
                 if($(this).form('enableValidation').form('validate')){
                     var formData = $('#ff').serializeJSON();
-                    $.ajax({
-                        url:'http://localhost:3000/users',
-                        type:'post',
-                        data:formData
-                    }).done(function(res){
-                        $('#dlg').dialog('close');
-                        $('#dg').datagrid('reload')
-                    })
+                    if(formData._id.length>0){
+                        //修改
+                        $.ajax({
+                            url:`http://localhost:3000/users/${formData._id}`,
+                            type:'put',
+                            data:formData
+                        }).done(function(res){
+                            $('#dlg').dialog('close');
+                            $('#dg').datagrid('reload')
+                        })
+                    }else{
+                        delete formData._id;
+                        $.ajax({
+                            url:'http://localhost:3000/users',
+                            type:'post',
+                            data:formData
+                        }).done(function(res){
+                            $('#dlg').dialog('close');
+                            $('#dg').datagrid('reload')
+                        })
+                    }
                 }
             }
         });
@@ -69,9 +83,11 @@
                 text:'添加',
                 iconCls:'icon-add',
                 handler:function(){
+                    clearForm();
                     $('#dlg').dialog('open')
                 }
             },{
+                //删除多条选中的按钮
                 text:'删除',
                 iconCls:'icon-cut',
                 handler:function(){alert('cut')}
@@ -81,6 +97,7 @@
                 handler:function(){alert('save')}
             }],
         columns:[[
+            {field:'ck',checkbox:true},
             {field:'name',title:'用户名',width:100},
             {field:'age',title:'年龄',width:100},
             {field:'email',title:'邮箱',width:100},
@@ -89,20 +106,46 @@
             //修改和删除功能
             {field:'_id',title:'操作',width:100,
                 formatter:function(value,row,index){
-                    return `<a href="javascript:;" onclick="updateData('${row._id}')">修改</a>`
+                    return `<a href="javascript:;" onclick="updateData('${row._id}')">修改</a>　　<a href="javascript:;" onclick="removeData('${row._id}')">删除</a>`
                 }
             },
         ]],
+        // onClickRow:function(index,row){
+        //     console.log(index,row);
+        // }
     });
 
     //修改数据函数
-    function update(id){
+    function updateData(id){
         $.ajax({
-            url:`http://localost:3000/users/${id}`,
+            url:`http://localhost:3000/users/${id}`,
             type:'get'
         }).done(function(res){
-            console.log(res)
+            $('#ff').form('load',res);
+            $('#dlg').dialog('open');
         })
     }
 
+    //删除单条数据
+    function removeData(id){
+        $.messager.confirm('确认对话框', '你确认删除?', function(r){
+            if (r){
+                $.ajax({
+                    url:`http://localhost:3000/users/${id}`,
+                    type:'delete'
+                }).done(function(res){
+                    $("#dg").datagrid('reload');
+                })
+            }
+        });
+    }
+    //删除多条选中的数据
+    function deleteChoose(){
+        var rows = $('#dg').datagrid('getSelections');
+        var ids = [];
+        for(var i=0;i<rows.length;i++){
+            ids.push(rows._id);
+        };
+        console.log(ids);
+    }
 </script>
