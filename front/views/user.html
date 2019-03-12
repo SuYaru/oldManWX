@@ -94,7 +94,7 @@
                         })
                     }else{
                         // add
-                        console.log("单纯添加");
+                        //console.log("单纯添加");
 
                         delete formData._id;
                         $.ajax({
@@ -161,7 +161,6 @@
     function updateData(id){
         $(target).parents('.datagrid-row').siblings().
     removeClass('datagrid-row-over datagrid-row-checked datagrid-row-selected');
-
         $.ajax({
             url:`${gloableURL}users/${id}`,
             type:'get'
