@@ -21,6 +21,26 @@
     </div>
 
     <ul id="tt"></ul>
+    <div id="mm" class="easyui-menu" style="width:120px;">
+        <div onclick="addData()" data-options="iconCls:'icon-add'">新增</div>
+        <div onclick="deleteData()" data-options="iconCls:'icon-remove'">删除</div>
+        <div class="menu-sep"></div>
+        <div onclick="expand()">展开</div>
+        <div onclick="collapse()">收缩</div>
+    </div>
+    <!-- 添加节点的弹出框 -->
+    <div id="dlg" class="easyui-dialog" title="新增节点" data-options="iconCls:'icon-save',closed: true" style="width:400px;padding:10px">
+        <form id="cateform" class="easyui-form" method="post" data-options="novalidate:true">
+            <input   name="_id" style="width:100%">
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="text" style="width:100%" data-options="label:'节点名称:',required:true">
+            </div>
+        </form>
+        <div style="text-align:center;padding:5px 0">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">提交</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">重置</a>
+        </div>
+    </div>
 </body>
 </html>
 
@@ -33,9 +53,100 @@
     })
     function treeList(type){
         $('#tt').tree({
-            url:`${gloableURL}cate/list/${type}`
+            url:`${gloableURL}cate/list/${type}`,
+            method: 'post',
+            animate: true,
+            onContextMenu: function(e,node){
+                e.preventDefault();
+                $(this).tree('select',node.target);
+                $('#mm').menu('show',{
+                    left: e.pageX,
+                    top: e.pageY
+                });
+            }
         });
     }
-
     treeList(1);
+    // 弹出添加节点框
+    function addData(){
+        //console.log($('.validatebox-text').length);
+        $('.validatebox-text').each(function(index,value){
+            $(this).removeClass('validatebox-invalid');
+            $(this).parent('.easyui-fluid').removeClass('textbox-invalid');
+        })
+        $('#dlg').dialog('open');
+    }
+    // 新增提交
+    function submitForm(){
+        $('#cateform').form('submit',{
+            onSubmit:function(){
+                if($(this).form('enableValidation').form('validate')){
+                    // 将当前页面的表单信息进行获取，然后进行ajax请求
+                    var formData = $("#cateform").serializeJSON();
+                    if(formData._id.length > 0){
+                        $.ajax({
+                            url:`${gloableURL}cate/${formData._id}`,
+                            type:'put',
+                            data: formData
+                        }).done(function(res){
+                            console.log("后续操作");
+                            $('#dlg').dialog('close');
+                            $('#dg').datagrid('reload');
+                            $('#cateform').form('clear');
+                        })
+                    }else{
+                        var t = $('#tt');
+                        var node = t.tree('getSelected');
+                        formData.parentId=node._id;
+                        formData.type=node.type;
+                        console.log(formData);
+                        console.log(node);
+                        t.tree('append', {
+                            parent: (node?node.target:null),
+                            data: [{
+                                text:formData.text
+                            }]
+                        });
+                        delete formData._id;
+                        $.ajax({
+                            url:`${gloableURL}cate`,
+                            type:'post',
+                            data: formData
+                        }).done(function(res){
+                            // 再次添加内容时，文字区域有提示 无效
+                            // 这里清空效果有问题
+                            $('#dlg').dialog('close');
+                            $('#dg').datagrid('reload');
+                            $('#cateform').form('clear');
+                        })
+                    }
+                }
+            }
+        });
+        return false; // 阻止默认事件
+    }
+    function deleteData(){
+        $.messager.confirm('确认对话框', '你确认删除?', function(r){
+            if (r){
+                var node = $('#tt').tree('getSelected');
+                console.log(node);
+                $('#tt').tree('remove', node.target);
+                $.ajax({
+                    url:`${gloableURL}cate/${node._id}`,
+                    type:'delete'
+                }).done(function(res){
+                    $.messager.confirm('提示', '当前模块已经被删除！');
+                    $("#dlg").datagrid('reload');
+                })
+            }
+        });
+    }
+    function collapse(){
+        var node = $('#tt').tree('getSelected');
+        $('#tt').tree('collapse',node.target);
+    }
+    function expand(){
+        var node = $('#tt').tree('getSelected');
+        $('#tt').tree('expand',node.target);
+    }
 </script>
