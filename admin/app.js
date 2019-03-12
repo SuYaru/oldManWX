@@ -12,6 +12,7 @@ mongoose.set('useFindAndModify', false);
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');    // 新增模块需要添加的部分
 var newsRouter = require('./routes/news');
+var cateRouter = require('./routes/cate');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/news', newsRouter);
+app.use('/cate', cateRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -12,7 +12,7 @@
 <body>
         <table id="dg"></table>
         <div id="tb" style="padding:2px 5px;">
-            <input id="searchFor" label="用户名称:" style="width:30%;height:30px;margin:10px 0">
+            <input id="searchFor" label="搜索内容:" style="width:30%;height:30px;margin:10px 0">
 
             <a href="#" id="searchData" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
             <a href="#" id="addData" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>
@@ -56,7 +56,7 @@
             {field:'age',title:'年龄'},
             {field:'_id',title:'操作', width:80,
                 formatter: function(value,row,index){
-                    return `<a href="javascript:void(0)" onclick="updateData('${row._id}')">修改</a> <a href="javascript:void(0)" onclick="deleteData('${row._id}')">删除</a>`
+                    return `<a href="javascript:void(0)" onclick="updateData('${row._id}',this)">修改</a> <a href="javascript:void(0)" onclick="deleteData('${row._id}')">删除</a>`
                 }
             }
         ]]
@@ -149,7 +149,8 @@
                         ids: ids.toString()
                     }
                 }).done(function(res){
-                    console.log(res.message);
+                    //console.log(res.message);
+                    $.messager.confirm('提示', '所选数据已被删除');
                     $("#dg").datagrid('reload');
                 })
             }
@@ -158,6 +159,9 @@
 
     // 3、修改
     function updateData(id){
+        $(target).parents('.datagrid-row').siblings().
+    removeClass('datagrid-row-over datagrid-row-checked datagrid-row-selected');
+
         $.ajax({
             url:`${gloableURL}users/${id}`,
             type:'get'

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Basic Layout - jQuery EasyUI Demo</title>
+	<link rel="stylesheet" type="text/css" href="../css/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../css/themes/icon.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.serializejson.min.js"></script>
+
+</head>
+<body>
+
+    <div id="treeButtonGroup" class="easyui-panel" style="padding:5px;">
+        <a href="#" class="easyui-linkbutton" data-type="1" data-options="toggle:true,group:'g1'">新闻分类</a>
+        <a href="#" class="easyui-linkbutton" data-type="2" data-options="toggle:true,group:'g1'">产品分类</a>
+        <a href="#" class="easyui-linkbutton"  data-type="3" data-options="toggle:true,group:'g1'">用户分类</a>
+        <a href="#" class="easyui-linkbutton"  data-type="4" data-options="toggle:true,group:'g1'">地区分类</a>
+        <a href="#" class="easyui-linkbutton" data-type="5"  data-options="toggle:true,group:'g1'">相册分类</a>
+    </div>
+
+    <ul id="tt"></ul>
+</body>
+</html>
+
+<script>
+    var gloableURL=window.parent.gloableURL;
+
+    $("#treeButtonGroup a").click(function(){
+        var type = $(this).attr('data-type');
+        treeList(type);
+    })
+    function treeList(type){
+        $('#tt').tree({
+            url:`${gloableURL}cate/list/${type}`
+        });
+    }
+
+    treeList(1);
+</script>

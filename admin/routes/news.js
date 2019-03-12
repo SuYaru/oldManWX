@@ -11,6 +11,7 @@ router.put('/:id',dataCtrl.update);
 router.delete('/:id',dataCtrl.remove);
 router.post('/list',dataCtrl.list);
 router.get('/:id',dataCtrl.getById);
+router.post('/removes',dataCtrl.removes);
 
 /*
 
