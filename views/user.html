@@ -90,7 +90,9 @@
                 //删除多条选中的按钮
                 text:'删除',
                 iconCls:'icon-cut',
-                handler:function(){alert('cut')}
+                handler:function(){
+                    deleteChoose()
+                }
             },'-',{
                 text:'修改',
                 iconCls:'icon-save',
@@ -144,8 +146,16 @@
         var rows = $('#dg').datagrid('getSelections');
         var ids = [];
         for(var i=0;i<rows.length;i++){
-            ids.push(rows._id);
+            ids.push(rows[i]._id);
         };
-        console.log(ids);
+        $.ajax({
+            url:"http://localhost:3000/users/deleteChoose",
+            type:'post',
+            data:{
+                ids:ids.toString()
+            }
+        }).done(function(res){
+            $("#dg").datagrid('reload');
+        })
     }
 </script>
