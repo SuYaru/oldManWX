@@ -125,7 +125,7 @@ $('#dg').datagrid({
         {field:'author',title:'撰稿人',width:100},
         {field:'_id',title:'操作', width:80,
             formatter: function(value,row,index){
-				return `<a href="javascript:void(0)" onclick="updateData('${row._id}',this)">修改</a> <a href="javascript:void(0)" onclick="deleteData('${row._id}')">删除</a>`
+				return `<a class="edit-a" href="javascript:void(0)" onclick="updateData('${row._id}',this)" style="display:inline-block;width:25px;height:25px;float:left;"></a> <a class="delete-a" href="javascript:void(0)" onclick="deleteData('${row._id}')" style="display:inline-block;width:25px;height:25px;float:right;"></a>`
 			}
 		}
     ]]

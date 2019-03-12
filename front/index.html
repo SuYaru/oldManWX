@@ -20,16 +20,16 @@
 		<div data-options="region:'west',split:true" title="西部世界后台管理" style="width:200px;">
 			<div id="menus" class="easyui-accordion" style="width:200px;height:200px;" data-options="fit:true">
 				<div title="用户管理" data-options="iconCls:'icon-user'" style="overflow:auto;padding:10px;">
-					<a link="./views/user.html" href="javascript:void(0)">用户管理</a>
+					<a link="./views/user.html" href="javascript:void(0)" style="color:#36b9fd;text-decoration:none;font-weight:bold;">用户管理</a>
 				</div>
 				<div title="分类管理" data-options="iconCls:'icon-divice',selected:true" style="padding:10px;">
-					<a link="./views/cate.html" href="javascript:void(0)">分类管理</a>
+					<a link="./views/cate.html" href="javascript:void(0)" style="color:#36b9fd;text-decoration:none;font-weight:bold;">分类管理</a>
 				</div>
 				<div title="新闻管理" data-options="iconCls:'icon-news',selected:true" style="padding:10px;">
-					<a link="./views/news.html" href="javascript:void(0)">新闻管理</a>
+					<a link="./views/news.html" href="javascript:void(0)" style="color:#36b9fd;text-decoration:none;font-weight:bold;">新闻管理</a>
 				</div>
 				<div title="订单管理" data-options="iconCls:'icon-order'" style="padding:10px;">
-					<a link="./views/order.html" href="javascript:void(0)">订单管理</a>
+					<a link="./views/order.html" href="javascript:void(0)" style="color:#36b9fd;text-decoration:none;font-weight:bold;">订单管理</a>
 				</div>
 			</div>
 		</div>
@@ -63,7 +63,7 @@ function addPanel(title,link){
 		$('#tt').tabs('add',{
         title: title,
 		content: `<iframe src="${link}" frameborder="0" style="width:100%;height:100%"></iframe>`,
-		iconCls:'icon-save',
+		iconCls:'',
         closable: true
     	});
 	}

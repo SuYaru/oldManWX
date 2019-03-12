@@ -309,10 +309,10 @@ background: -webkit-linear-gradient(top,#36b9fd 0,#2887c2 100%);
   border-width: 0 0 1px;
 }
 .accordion-collapse {
-  background: url('images/accordion_arrows.png') no-repeat 0 0;
+  background: url('images/shuangjiantoushang.png') no-repeat 0 0;
 }
 .accordion-expand {
-  background: url('images/accordion_arrows.png') no-repeat -16px 0;
+  background: url('images/shuangjiantouxia.png') no-repeat 0 0;
 }
 .accordion {
   background: #ffffff;
@@ -1248,10 +1248,10 @@ background: -webkit-linear-gradient(top,#36b9fd 0,#2887c2 100%);
   background: url('images/layout_arrows.png') no-repeat -16px 0;
 }
 .layout-button-left {
-  background: url('images/layout_arrows.png') no-repeat 0 0;
+  background: url('images/shuangjiantouzuo.png') no-repeat 0 0;
 }
 .layout-button-right {
-  background: url('images/layout_arrows.png') no-repeat 0 -16px;
+  background: url('images/shuangjiantouyou.png') no-repeat 0 0;
 }
 .layout-split-proxy-h,
 .layout-split-proxy-v {
