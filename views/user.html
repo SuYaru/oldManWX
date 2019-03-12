@@ -26,8 +26,26 @@
             <div style="margin-bottom:20px">
                 <input class="easyui-textbox" name="age" style="width:100%" data-options="label:'年龄:',required:true">
             </div>
+             <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="password" style="width:100%" data-options="label:'密码:',required:true,validType:'password'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="tel" style="width:100%" data-options="label:'电话:',required:true,validType:'tel'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="card" style="width:100%" data-options="label:'身份证:',required:true,validType:'card'">
+            </div>
             <div style="margin-bottom:20px">
                 <input class="easyui-textbox" name="email" style="width:100%" data-options="label:'邮箱:',required:true,validType:'email'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="interest" style="width:100%" data-options="label:'兴趣爱好:',required:true,validType:'interest'">
+            </div>
+           <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="address" style="width:100%" data-options="label:'住址:',required:true,validType:'address'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="sex" style="width:100%" data-options="label:'性别:',required:true,validType:'sex'">
             </div>
         </form>
         <div style="text-align:center;padding:5px 0">
@@ -102,8 +120,16 @@
         columns:[[
             {field:'ck',checkbox:true},
             {field:'name',title:'用户名',width:100},
-            {field:'age',title:'年龄',width:100},
+            {field:'age',title:'年龄',width:50},
+            {field:'password',title:'密码',width:100},
+            {field:'tel',title:'电话',width:100},
+            {field:'card',title:'身份证',width:100},
             {field:'email',title:'邮箱',width:100},
+            {field:'interest',title:'兴趣爱好',width:100},
+            {field:'address',title:'住址',width:100},
+            {field:'sex',title:'性别',width:50},
+            {field:'know',title:'了解我们？',width:100},
+            {field:'time',title:'注册时间',width:220},
 
 
             //修改和删除功能
