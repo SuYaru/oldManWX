@@ -59,11 +59,12 @@
     //点击内容打开文本编辑器
     $('.cc').click(function(){
         $('#w').window('open').parent('.panel-htop').find('.panel-tool-close').on('click',function(){
-            var content=$('#w .easyui-texteditor').html();
-            console.log($('input[name="content"]:hidden').val());
+             var content=$('#w .easyui-texteditor').html();
+            /*console.log($('input[name="content"]:hidden').val());
             console.log($('input[name="content"]:hidden').length);
-            $('input[name="content"]:hidden').val(content);
-            console.log($('input[name="content"]').val());
+            $('input[name="content"]:hidden').val(content);*/
+            console.log(content);
+            $('#content').textbox('setValue',content);
             //alert(content);
         });
     })
