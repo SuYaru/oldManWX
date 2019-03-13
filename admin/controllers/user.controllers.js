@@ -2,11 +2,18 @@ const mongoose=require('mongoose');
 
 var User= require('../models/user.model');
 
-exports.create=function(req,res,next){
-    /* const user=new User({name:'dadda',password:"2wer",age:23123}); */
+/* exports.create=function(req,res,next){
+    const user=new User({name:'dadda',password:"2wer",age:23123});
     console.log(req.body);
     const user=new User(req.body);
     user.save().then((data)=>res.json(data));
+} */
+exports.create = function(req,res,next){
+    const user = new User(req.body);
+    var myDate = new Date();
+    user.time = myDate;
+    console.log(user);
+    user.save().then(data=>res.json(data));
 }
 
 exports.update=function(req,res,next){
