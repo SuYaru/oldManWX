@@ -26,8 +26,8 @@
 
                 <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed: true" style="width:400px;padding:10px">
                     <form id="orderForm" class="easyui-form" method="post" data-options="novalidate:true">
-                           <input   name="_id" style="width:100%" type="hidden">
-                            <!--  <input   name="newsId" id="newsId" style="width:100%"> -->
+                           <input   name="_id" style="width:100%">
+                        <!-- <input   name="orderId" style="width:100%"> -->
                         <div style="margin-bottom:20px">
                             <input class="easyui-textbox" name="ordername" style="width:100%" data-options="label:'订单名称:',required:true">
                         </div>
@@ -35,22 +35,21 @@
                             <input class="easyui-textbox"  name="details" style="width:100%" data-options="label:'订单明细:',required:true">
                         </div>
                         <div style="margin-bottom:20px">
-                            <input class="easyui-textbox"  name="sdate" style="width:100%" data-options="label:'开始时间:',required:true">
+                            <input class="easyui-datebox"  name="sdate" style="width:100%" data-options="label:'开始时间:',required:true">
                         </div>
                         <div style="margin-bottom:20px">
-                            <input class="easyui-textbox"  name="fdate" style="width:100%" data-options="label:'预计时间:',required:true">
+                            <input class="easyui-datebox"  name="fdate" style="width:100%" data-options="label:'预计时间:',required:true">
                         </div>
                         <div style="margin-bottom:20px;">
                             订单进度:
                             <div style="margin-left:70px">
-
-                            <input class="easyui-slider" value="12" style="width:240px" data-options="
-			showTip: true,
-			rule: [0,'|',25,'|',50,'|',75,'|',100],
-			tipFormatter: function(value){
-				return value+'%';
-            }">
-        </div>
+                                <input class="easyui-slider" value="12" style="width:240px" name="progress" data-options="
+                                showTip: true,
+                                rule: [0,'|',25,'|',50,'|',75,'|',100],
+                                tipFormatter: function(value){
+                                    return value+'%';
+                                }">
+                            </div>
                         </div>
                     </form>
                     <div style="text-align:center;padding:5px 0">
@@ -83,13 +82,15 @@
  function submitForm(){
     $('#orderForm').form('submit',{
         onSubmit:function(){
-
            if($(this).form('enableValidation').form('validate')){
                 var formData = $("#orderForm").serializeJSON();
+                console.log(orderId);
+
                 formData.orderId=orderId;
-                console.log(formData._id);
                 // 将当前页面的表单信息进行获取，然后进行ajax请求
                 if(formData._id.length > 0){
+                console.log(formData);
+
                     // update
                     $.ajax({
                         url:`${gloableURL}order/${formData._id}`,
@@ -103,6 +104,8 @@
                 }else{
                     // add
                     delete formData._id;
+                    console.log(gloableURL);
+                    console.log(formData);
                     $.ajax({
                         url:`${gloableURL}order`,
                         type:'post',
@@ -131,11 +134,15 @@ $('#dg').datagrid({
     toolbar:'#tb',
     columns:[[
         {field:'ck',checkbox:true},
+       /*  {field:'orderId',title:"订单Id"}, */
         {field:'ordername',title:'订单名称',width:100},
         {field:'details',title:'订单明细',width:200},
         {field:'sdate',title:'开始时间',width:100},
         {field:'fdate',title:'预计完成时间',width:100},
-        {field:'progress',title:'订单进度',width:100},
+        {field:'progress',title:'订单进度',width:100,                      formatter:function(value,row,index){
+                return row.progress+"%";
+            }
+        },
         {field:'_id',title:'操作', width:80,
             formatter: function(value,row,index){
 				return `<a class="edit-a" href="javascript:void(0)" onclick="updateData('${row._id}',this)" style="display:inline-block;width:25px;height:25px;float:left;"></a> <a class="delete-a" href="javascript:void(0)" onclick="deleteData('${row._id}')" style="display:inline-block;width:25px;height:25px;float:right;"></a>`
@@ -160,16 +167,24 @@ function deleteData(id){
 }
 
 function updateData(id,target){
-    $(target).parents('.datagrid-row').siblings().
-    removeClass('datagrid-row-over datagrid-row-checked datagrid-row-selected');
+    if(orderId){
+        $(target).parents('.datagrid-row').siblings().
+        removeClass('datagrid-row-over datagrid-row-checked datagrid-row-selected');
 
-    $.ajax({
-        url:`${gloableURL}order/${id}`,
-        type:'get'
-    }).done(function(res){
-        $('#orderForm').form('load',res);
-        $('#dlg').dialog('open');
-    })
+        $.ajax({
+            url:`${gloableURL}order/${id}`,
+            type:'get'
+        }).done(function(res){
+            console.log("更新输出值");
+            console.log(res);
+            $('#orderForm').form('load',res);
+            $('#dlg').dialog('open');
+        })
+    }else{
+        $.messager.confirm('提示','请选择一个修改子类');
+    }
+
+
 
 }
 
@@ -207,7 +222,6 @@ $("#searchData").click(function(){
 
 
 $("#addData").click(function(){
-    console.log(orderId);
     if(orderId){
         $('.validatebox-text').each(function(index,value){
             //console.log($('#userform'));

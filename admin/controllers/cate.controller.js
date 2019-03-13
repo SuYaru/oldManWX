@@ -2,21 +2,59 @@ const mongoose = require('mongoose');
 var Cate = require('../models/cate.model');
 
   exports.create = function(req, res, next) {
-      console.log(675675);
+      //console.log(675675);
       const cate = new Cate(req.body);
       cate.save().then((data) => res.json(data));
   }
 
   exports.update = function(req,res,next){
     const id = req.params.id;
-
     Cate.findByIdAndUpdate(id,{$set: req.body},{new:false}).then(data=>{
       res.json(data);
     })
   }
 
   exports.remove = function(req,res,next){
+    console.log('分类节点删除');
+    removeRecursive(req.params.id);
+  }
 
+  // 递归删除节点
+  function removeRecursive(targetId){
+    // 找到父节点是id 的节点，，递归删除
+    console.log("____"+targetId);
+
+    Cate.findById(targetId).then(data=>{
+        //res.json(data);
+      // 查询是否有同类型且父节点为 当前id 的子节点，有则递归删除；没有则删除当前节点
+      Cate.find({type:data.type,parentId:data._id}).then(data=>{
+        console.log(data);
+        console.log(data.length);
+        /* if(data.length==0){
+        console.log("____"+targetId);
+           Cate.findByIdAndDelete(targetId,(err,data)=>{
+                console.log(err);
+                console.log(data);
+           });
+        }else{
+            data.forEach(function(value,index){
+              console.log("^^^^"+value._id);
+              removeRecursive(value._id);
+            })
+        } */
+
+         if(data.length>0){
+            data.forEach(function(value,index){
+              console.log("^^^^"+value._id);
+              removeRecursive(value._id);
+            })
+          }
+          Cate.findByIdAndDelete(targetId,(err,data)=>{
+                console.log(err);
+                console.log(data);
+          });
+      });
+    })
   }
 
   // pid === parentId
@@ -40,18 +78,15 @@ var Cate = require('../models/cate.model');
   }
 
   exports.list = function(req,res,next){
-    var type = req.params.type;
-    console.log(type);
-    Cate.find({type:type},function(err,data){
-      console.log(data);
-      res.json( reverseTree(data,null) );
-    })
-
+      var type = req.params.type;
+      Cate.find({type:type},function(err,data){
+        res.json( reverseTree(data,null) );
+      })
   }
 
   exports.get = function(req,res,next){
-    const id = req.params.id;
-    Cate.findById(id).then(data=>{
-      res.json(data);
-    })
+      const id = req.params.id;
+      Cate.findById(id).then(data=>{
+        res.json(data);
+      })
   }

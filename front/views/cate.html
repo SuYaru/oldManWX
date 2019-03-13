@@ -135,6 +135,7 @@
                     url:`${gloableURL}cate/${node._id}`,
                     type:'delete'
                 }).done(function(res){
+                    console.log(res);
                     $.messager.confirm('提示', '当前模块已经被删除！');
                     $("#dlg").datagrid('reload');
                 })

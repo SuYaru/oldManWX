@@ -18,6 +18,7 @@ exports.update=function(req,res,next){
 }
 exports.remove=function(req,res,next){
     const id=req.params.id;
+
     News.findByIdAndDelete(id,(err,data)=>{
         res.json(data);
     });

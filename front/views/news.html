@@ -161,15 +161,20 @@ function deleteData(id){
 }
 
 function updateData(id,target){
-    $(target).parents('.datagrid-row').siblings().
-    removeClass('datagrid-row-over datagrid-row-checked datagrid-row-selected');
-    $.ajax({
-        url:`${gloableURL}news/${id}`,
-        type:'get'
-    }).done(function(res){
-        $('#newsForm').form('load',res);
-        $('#dlg').dialog('open');
-    })
+    if(orderId){
+        $(target).parents('.datagrid-row').siblings().
+        removeClass('datagrid-row-over datagrid-row-checked datagrid-row-selected');
+        $.ajax({
+            url:`${gloableURL}news/${id}`,
+            type:'get'
+        }).done(function(res){
+            $('#newsForm').form('load',res);
+            $('#dlg').dialog('open');
+        })
+    }else{
+        $.messager.confirm('提示','请选择一个修改子类');
+    }
+
 
 }
 

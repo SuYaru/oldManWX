@@ -1,11 +1,9 @@
 const mongoose=require('mongoose');
 
-var News= require('../models/order.model');
+var Order= require('../models/order.model');
 
 exports.create=function(req,res,next){
-    /* const user=new User({name:'dadda',password:"2wer",age:23123}); */
     const order=new Order(req.body);
-    console.log(order);
     order.save().then((data)=>res.json(data));
 }
 
@@ -46,10 +44,10 @@ exports.list=function(req,res,next){
           }
       }
     // page limit 是字符串类型
+    console.log(queryCondition);
     Order.paginate(queryCondition,{page:+page,limit:+rows},function(err,result){
         result.rows=result.docs;
         delete result.docs;
-        // console.log(result);
         res.json(result);
     });
 }

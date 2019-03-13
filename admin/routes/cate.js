@@ -8,6 +8,7 @@ router.delete('/:id', dataCtrl.remove);
 router.post('/list/:type', dataCtrl.list);
 router.get('/:id', dataCtrl.get);
 
+
 module.exports = router;
 
 
