@@ -55,6 +55,15 @@
                         label: '女',
                         value: '女'}]" />
                 </div>
+                <div style="margin-bottom:20px">
+                    <input id="cc" class="easyui-combobox" name="know" data-options="required:true,valueField:'id',editable:false,textField:'text',panelHeight:80,label:'是否了解我们',valueField: 'label',
+                    textField: 'value',data: [{
+                        label: 'true',
+                        value: '了解'
+                    },{
+                        label: 'false',
+                        value: '不了解'}]" />
+                </div>
             </form>
             <div style="text-align:center;padding:5px 0">
                 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">提交</a>
@@ -75,7 +84,7 @@
         columns:[[
             {field:'ck',checkbox:true},
             {field:'name',title:'用户名',width:100},
-            {field:'age',title:'年龄',width:100,align:'right',halign: 'center'},
+            {field:'age',title:'年龄',width:50,align:'right',halign: 'center'},
             {field:'birthday',title:'出生年月',width:150,
                 formatter:function(val,row,index){
                     return jsonYearMonthDay(val);
@@ -85,9 +94,13 @@
             {field:'card',title:'身份证',width:180,align:'center',halign: 'left'},
             {field:'email',title:'邮箱',width:200,align:'left',halign: 'center'},
             {field:'interest',title:'兴趣爱好',width:200},
-            {field:'address',title:'住址',width:100},
+            {field:'address',title:'住址',width:150},
             {field:'sex',title:'性别',width:50},
-            {field:'know',title:'了解我们？',width:100},
+            {field:'know',title:'了解我们？',width:100,
+                formatter:function(val,row,index){
+                    return val==false?"了解":"不了解";
+                }
+            },
             {field:'time',title:'注册时间',width:220,align:'center',
                     formatter:function(val,row,index){
                         return jsonYearMonthDay(val);
@@ -150,6 +163,8 @@
                 if($(this).form('enableValidation').form('validate')){
                     // 将当前页面的表单信息进行获取，然后进行ajax请求
                     var formData = $("#userform").serializeJSON();
+                    console.log(formData.know);
+                    formData.know=formData.know=="了解"?true:false;
                     if(formData._id.length > 0){
                         // update
                         $.ajax({
