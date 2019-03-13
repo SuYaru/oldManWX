@@ -19,61 +19,66 @@
             <a href="#" id="removesData" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="deleteDatas()">删除</a>
         </div>
 
-        <div id="dlg" class="easyui-dialog" title="用户信息" data-options="iconCls:'icon-save',closed: true" style="width:400px;padding:10px;">
+        <div id="dlg" class="easyui-dialog" title="用户信息" data-options="iconCls:'icon-save',closed: true" style="width:500px;padding:10px;">
             <form id="userform" class="easyui-form" method="post" data-options="novalidate:true">
                 <input   name="_id" style="width:100%;display:none;">
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="name" style="width:100%" data-options="label:'用户名:',required:true">
+                    <input class="easyui-textbox" name="name" style="width:50%" data-options="label:'用户名称:',required:true">
+                    　
+                    <input class="easyui-textbox" name="age" style="width:45%" data-options="label:'年　　龄:',required:true">
                 </div>
+
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="age" style="width:100%" data-options="label:'年龄:',required:true">
+                    <input class="easyui-textbox" name="tel" style="width:50%" data-options="label:'电　　话:',required:true,validType:'tel'">
+                    　
+                    <input class="easyui-datebox" name="birthday" style="width:45%" data-options="label:'出生年月:',required:true">
                 </div>
+
                 <div style="margin-bottom:20px">
-                    <input class="easyui-datebox" name="birthday" style="width:100%" data-options="label:'出生年月:',required:true">
+                    <input class="easyui-textbox" name="card" style="width:50%" data-options="label:'身份证号:',required:true,validType:'card'">
+                    　
+                    <input class="easyui-textbox" name="email" style="width:45%" data-options="label:'邮　　箱：',required:true,validType:'email'">
                 </div>
-                <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="tel" style="width:100%" data-options="label:'电话:',required:true,validType:'tel'">
-                </div>
-                <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="card" style="width:100%" data-options="label:'身份证:',required:true,validType:'card'">
-                </div>
-                <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="email" style="width:100%" data-options="label:'邮箱:',required:true,validType:'email'">
-                </div>
+
                 <div style="margin-bottom:20px">
                     <input class="easyui-textbox" name="interest" style="width:100%" data-options="label:'兴趣爱好:',required:true,validType:'interest'">
                 </div>
                <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="address" style="width:100%" data-options="label:'住址:',required:true,validType:'address'">
+                    <input class="easyui-textbox" name="address" style="width:100%" data-options="label:'住　　址:',required:true,validType:'address'">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input id="cc" class="easyui-combobox" name="sex" data-options="required:true,valueField:'id',editable:false,textField:'text',panelHeight:80,label:'性别',valueField: 'label',
+                    <input id="cc" style="width:50%" class="easyui-combobox" name="sex" data-options="required:true,valueField:'id',editable:false,textField:'text',panelHeight:80,label:'性　　别',valueField: 'label',
                     textField: 'value',data: [{
                         label: '男',
                         value: '男'
                     },{
                         label: '女',
                         value: '女'}]" />
-                </div>
-                <div style="margin-bottom:20px">
-                    <input id="cc" class="easyui-combobox" name="know" data-options="required:true,valueField:'id',editable:false,textField:'text',panelHeight:80,label:'是否了解我们',valueField: 'label',
+                        　
+                        <input id="cc" style="width:45%" class="easyui-combobox liaojie" name="know" data-options="required:true,valueField:'id',editable:false,textField:'text',panelHeight:80,label:'是否了解我们',valueField: 'label',
                     textField: 'value',data: [{
                         label: 'true',
                         value: '了解'
                     },{
                         label: 'false',
                         value: '不了解'}]" />
+
                 </div>
+
             </form>
             <div style="text-align:center;padding:5px 0">
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">提交</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">重置</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:30%;display: inline-block;">提交</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:30%;display: inline-block;">重置</a>
             </div>
         </div>
 </body>
 </html>
 
 <script>
+
+
+
+
     var gloableURL=window.parent.gloableURL;
     $('#dg').datagrid({
         url:`${gloableURL}users/list`,
