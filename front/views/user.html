@@ -47,7 +47,13 @@
                     <input class="easyui-textbox" name="address" style="width:100%" data-options="label:'住址:',required:true,validType:'address'">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="sex" style="width:100%" data-options="label:'性别:',required:true,validType:'sex'">
+                    <input id="cc" class="easyui-combobox" name="sex" data-options="required:true,valueField:'id',editable:false,textField:'text',panelHeight:80,label:'性别',valueField: 'label',
+                    textField: 'value',data: [{
+                        label: '男',
+                        value: '男'
+                    },{
+                        label: '女',
+                        value: '女'}]" />
                 </div>
             </form>
             <div style="text-align:center;padding:5px 0">
@@ -94,6 +100,7 @@
             }
         ]]
     });
+
     // 日期格式转换
     function jsonYearMonthDay(val) {
         console.log(val);
