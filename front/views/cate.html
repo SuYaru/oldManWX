@@ -99,8 +99,6 @@
                         var node = t.tree('getSelected');
                         formData.parentId=node._id;
                         formData.type=node.type;
-                        console.log(formData);
-                        console.log(node);
                         t.tree('append', {
                             parent: (node?node.target:null),
                             data: [{
@@ -127,16 +125,14 @@
     }
     function deleteData(){
         $.messager.confirm('确认对话框', '你确认删除?', function(r){
-            if (r){
-                var node = $('#tt').tree('getSelected');
-                console.log(node);
-                $('#tt').tree('remove', node.target);
+            var node = $('#tt').tree('getSelected');
+            $('#tt').tree('remove', node.target);
+            if (node._id!=undefined && r){
                 $.ajax({
                     url:`${gloableURL}cate/${node._id}`,
                     type:'delete'
                 }).done(function(res){
-                    console.log(res);
-                    $.messager.confirm('提示', '当前模块已经被删除！');
+                    $.messager.confirm('提示', '该节点及其子节点已经被删除！');
                     $("#dlg").datagrid('reload');
                 })
             }

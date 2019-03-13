@@ -15,43 +15,21 @@ var Cate = require('../models/cate.model');
   }
 
   exports.remove = function(req,res,next){
-    console.log('分类节点删除');
-    removeRecursive(req.params.id);
+      removeRecursive(req.params.id);
   }
 
   // 递归删除节点
   function removeRecursive(targetId){
     // 找到父节点是id 的节点，，递归删除
-    console.log("____"+targetId);
-
     Cate.findById(targetId).then(data=>{
-        //res.json(data);
       // 查询是否有同类型且父节点为 当前id 的子节点，有则递归删除；没有则删除当前节点
       Cate.find({type:data.type,parentId:data._id}).then(data=>{
-        console.log(data);
-        console.log(data.length);
-        /* if(data.length==0){
-        console.log("____"+targetId);
-           Cate.findByIdAndDelete(targetId,(err,data)=>{
-                console.log(err);
-                console.log(data);
-           });
-        }else{
-            data.forEach(function(value,index){
-              console.log("^^^^"+value._id);
-              removeRecursive(value._id);
-            })
-        } */
-
          if(data.length>0){
             data.forEach(function(value,index){
-              console.log("^^^^"+value._id);
               removeRecursive(value._id);
             })
           }
           Cate.findByIdAndDelete(targetId,(err,data)=>{
-                console.log(err);
-                console.log(data);
           });
       });
     })

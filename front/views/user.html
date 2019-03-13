@@ -177,9 +177,6 @@
                             $('#dlg').dialog('close');
                             $('#dg').datagrid('reload');
                             $('#userform').form('clear');
-                            //$('#userform').form('reset');
-                            //$('#userform').form('enableValidation').form('validate');
-                            //$('#userform ').validatebox('remove');
                         })
                     }
                 }
@@ -209,7 +206,6 @@
         for(var i=0;i<rows.length;i++){
             ids.push(rows[i]._id);
         }
-        console.log(ids);
         $.messager.confirm('确认对话框', '你确认删除?', function(r){
             if (r){
                 $.ajax({
