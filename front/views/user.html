@@ -31,9 +31,6 @@
                 <div style="margin-bottom:20px">
                     <input class="easyui-datebox" name="birthday" style="width:100%" data-options="label:'出生年月:',required:true">
                 </div>
-                 <div style="margin-bottom:20px">
-                    <input class="easyui-passwordbox" name="password" style="width:100%" data-options="label:'密码:',required:true,validType:'password'">
-                </div>
                 <div style="margin-bottom:20px">
                     <input class="easyui-textbox" name="tel" style="width:100%" data-options="label:'电话:',required:true,validType:'tel'">
                 </div>
@@ -72,21 +69,20 @@
         columns:[[
             {field:'ck',checkbox:true},
             {field:'name',title:'用户名',width:100},
-            {field:'age',title:'年龄',width:100},
+            {field:'age',title:'年龄',width:100,align:'right',halign: 'center'},
             {field:'birthday',title:'出生年月',width:150,
                 formatter:function(val,row,index){
                     return jsonYearMonthDay(val);
                 }
             },
-            {field:'password',title:'密码',width:100},
-            {field:'tel',title:'电话',width:100},
-            {field:'card',title:'身份证',width:100},
-            {field:'email',title:'邮箱',width:200},
+            {field:'tel',title:'电话',width:130,align:'right',halign: 'left'},
+            {field:'card',title:'身份证',width:180,align:'center',halign: 'left'},
+            {field:'email',title:'邮箱',width:200,align:'left',halign: 'center'},
             {field:'interest',title:'兴趣爱好',width:200},
             {field:'address',title:'住址',width:100},
             {field:'sex',title:'性别',width:50},
             {field:'know',title:'了解我们？',width:100},
-            {field:'time',title:'注册时间',width:220,
+            {field:'time',title:'注册时间',width:220,align:'center',
                     formatter:function(val,row,index){
                         return jsonYearMonthDay(val);
                     }
