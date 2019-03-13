@@ -203,14 +203,20 @@
     //2、删除
     // 单个删除
     function deleteData(id){
-        $.messager.confirm('确认对话框', '你确认删除?', function(r){
-            if (r){
-                $.ajax({
-                    url:`${gloableURL}users/${id}`,
-                    type:'delete'
-                }).done(function(res){
-                    $("#dg").datagrid('reload');
-                })
+        $.messager.confirm({
+            title:'确认对话框',
+            msg:'你确认删除',
+            ok:"确认",
+            cancel:"取消",
+            fn: function(r){
+                if (r){
+                    $.ajax({
+                        url:`${gloableURL}users/${id}`,
+                        type:'delete'
+                    }).done(function(res){
+                        $("#dg").datagrid('reload');
+                    })
+                }
             }
         });
     }
@@ -221,19 +227,25 @@
         for(var i=0;i<rows.length;i++){
             ids.push(rows[i]._id);
         }
-        $.messager.confirm('确认对话框', '你确认删除?', function(r){
-            if (r){
-                $.ajax({
-                    url:`${gloableURL}users/removes`,
-                    type:'post',
-                    data:{
-                        ids: ids.toString()
-                    }
-                }).done(function(res){
-                    //console.log(res.message);
-                    $.messager.confirm('提示', '所选数据已被删除');
-                    $("#dg").datagrid('reload');
-                })
+        $.messager.confirm({
+            title:'确认对话框',
+            msg:'你确认删除',
+            ok:"确认",
+            cancel:"取消",
+            fn:function(r){
+                if (r){
+                    $.ajax({
+                        url:`${gloableURL}users/removes`,
+                        type:'post',
+                        data:{
+                            ids: ids.toString()
+                        }
+                    }).done(function(res){
+                        //console.log(res.message);
+                        $.messager.confirm('提示', '所选数据已被删除');
+                        $("#dg").datagrid('reload');
+                    })
+                }
             }
         });
     }
