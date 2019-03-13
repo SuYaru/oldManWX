@@ -19,7 +19,7 @@
             <a href="#" id="removesData" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="deleteDatas()">删除</a>
         </div>
 
-        <div id="dlg" class="easyui-dialog" title="用户信息" data-options="iconCls:'icon-save',closed: true" style="width:400px;padding:10px">
+        <div id="dlg" class="easyui-dialog" title="用户信息" data-options="iconCls:'icon-save',closed: true" style="width:400px;padding:10px;">
             <form id="userform" class="easyui-form" method="post" data-options="novalidate:true">
                 <input   name="_id" style="width:100%;display:none;">
                 <div style="margin-bottom:20px">
@@ -27,6 +27,9 @@
                 </div>
                 <div style="margin-bottom:20px">
                     <input class="easyui-textbox" name="age" style="width:100%" data-options="label:'年龄:',required:true">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-datebox" name="birthday" style="width:100%" data-options="label:'出生年月:',required:true">
                 </div>
                  <div style="margin-bottom:20px">
                     <input class="easyui-passwordbox" name="password" style="width:100%" data-options="label:'密码:',required:true,validType:'password'">
@@ -69,12 +72,17 @@
         columns:[[
             {field:'ck',checkbox:true},
             {field:'name',title:'用户名',width:100},
-            {field:'age',title:'年龄',width:50},
+            {field:'age',title:'年龄',width:100},
+            {field:'birthday',title:'出生年月',width:150,
+                formatter:function(val,row,index){
+                    return jsonYearMonthDay(val);
+                }
+            },
             {field:'password',title:'密码',width:100},
             {field:'tel',title:'电话',width:100},
             {field:'card',title:'身份证',width:100},
-            {field:'email',title:'邮箱',width:100},
-            {field:'interest',title:'兴趣爱好',width:100},
+            {field:'email',title:'邮箱',width:200},
+            {field:'interest',title:'兴趣爱好',width:200},
             {field:'address',title:'住址',width:100},
             {field:'sex',title:'性别',width:50},
             {field:'know',title:'了解我们？',width:100},
@@ -92,7 +100,10 @@
     });
     // 日期格式转换
     function jsonYearMonthDay(val) {
+        console.log(val);
+        if(val){
             var date = new Date(val);
+            console.log(date);
             var year = date.getFullYear().toString();
             var month = (date.getMonth() + 1);
             var day = date.getDate().toString();
@@ -115,6 +126,8 @@
                 seconds = "0" + seconds;
             }
             return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
+        }
+
     }
     // 1、 新增
     $("#addData").click(function(){
@@ -149,7 +162,7 @@
                     }else{
                         // add
                         //console.log("单纯添加");
-
+                        console.log(formData);
                         delete formData._id;
                         $.ajax({
                             url:`${gloableURL}users`,

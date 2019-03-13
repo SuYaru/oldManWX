@@ -4,6 +4,7 @@ const mongoosePaginate= require('mongoose-paginate');
 var schema = new mongoose.Schema({
     name:String,
     age:Number,
+    birthday:Date,
     password:String,
     tel:Number,//电话z
     card:String,//身份证
