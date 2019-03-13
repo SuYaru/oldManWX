@@ -135,15 +135,24 @@ $('#dg').datagrid({
     columns:[[
         {field:'ck',checkbox:true},
        /*  {field:'orderId',title:"订单Id"}, */
-        {field:'ordername',title:'订单名称',width:100},
-        {field:'details',title:'订单明细',width:200},
-        {field:'sdate',title:'开始时间',width:100},
-        {field:'fdate',title:'预计完成时间',width:100},
-        {field:'progress',title:'订单进度',width:100,                      formatter:function(value,row,index){
-                return row.progress+"%";
+        {field:'ordername',title:'订单名称',width:160},
+        {field:'details',title:'订单明细',width:260},
+        {field:'sdate',title:'开始时间',width:200},
+        {field:'fdate',title:'预计完成时间',width:200},
+        {field:'progress',title:'订单进度',width:148,                      formatter:function(value,row,index){
+               // return row.progress+"%";
+               var bcolor='';
+               if(row.progress<30){
+                   bcolor='red';
+               }else if(row.progress>=30 && row.progress<80){
+                bcolor='#54ade8';
+               }else{
+                bcolor='#5fb878';
+               }
+               return `<div  style="width:${row.progress}px;height:20px;background:${bcolor};text-indent:100px;">${row.progress}%</div>`;
             }
         },
-        {field:'_id',title:'操作', width:80,
+        {field:'_id',title:'操作', width:100,
             formatter: function(value,row,index){
 				return `<a class="edit-a" href="javascript:void(0)" onclick="updateData('${row._id}',this)" style="display:inline-block;width:25px;height:25px;float:left;"></a> <a class="delete-a" href="javascript:void(0)" onclick="deleteData('${row._id}')" style="display:inline-block;width:25px;height:25px;float:right;"></a>`
 			}
