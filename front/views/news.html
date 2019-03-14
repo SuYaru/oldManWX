@@ -24,30 +24,21 @@
                 <a href="#" id="addData" class="easyui-linkbutton" data-options="iconCls:'icon-add'">新增</a>
                 <a href="#" id="removesData" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">批量删除</a>
             </div>
-            <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed: true" style="width:400px;
-            padding:10px">
+            <div id="dlg" class="easyui-dialog" title="新闻编辑" data-options="iconCls:'icon-save',closed: true" style="width:100%;height: 100%; padding:10px">
                 <form id="newsForm" class="easyui-form" method="post" data-options="novalidate:true">
                         <input   name="_id" style="width:100%" type="hidden">
-                    <div style="margin-bottom:20px">
-                        <input class="easyui-textbox" name="title" style="width:100%" data-options="label:'主题:',required:true">
+                    <div style="margin-bottom:20px; text-align: center">
+                        <input class="easyui-textbox" name="title" style="width:30%" data-options="label:'主　题:',required:true">
+                        <input class="easyui-textbox"  name="keyWords" style="width:30%" data-options="label:'　　关键词:',required:true">
+                        <input class="easyui-textbox"  name="author" style="width:30%" data-options="label:'　　撰稿人:',required:true">
                     </div>
-                    <div class="cc" style="margin-bottom:20px">
-                        <input class="easyui-textbox" id="content"  name="content" style="width:100%" data-options="label:'内容:',required:true">
-                    </div>
-                    <div style="margin-bottom:20px">
-                        <input class="easyui-textbox"  name="keyWords" style="width:100%" data-options="label:'关键词:',required:true">
-                    </div>
-                    <div style="margin-bottom:20px">
-                        <input class="easyui-textbox"  name="author" style="width:100%" data-options="label:'撰稿人:',required:true">
-                    </div>
+                    <div class="easyui-texteditor" title="内容编辑" style="width:100%;height: 40%; padding:20px"></div>
+
                 </form>
                 <div style="text-align:center;padding:5px 0">
                     <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">提交</a>
                     <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">重置</a>
                 </div>
-            </div>
-            <div id="w" class="easyui-window" data-options="modal:true,closed:true,iconCls:'icon-save'">
-                <div class="easyui-texteditor" title="TextEditor" style="width:700px;padding:20px"></div>
             </div>
         </div>
     </div>
@@ -57,17 +48,17 @@
 
 <script>
     //点击内容打开文本编辑器
-    $('.cc').click(function(){
-        $('#w').window('open').parent('.panel-htop').find('.panel-tool-close').on('click',function(){
-             var content=$('#w .easyui-texteditor').html();
-            /*console.log($('input[name="content"]:hidden').val());
-            console.log($('input[name="content"]:hidden').length);
-            $('input[name="content"]:hidden').val(content);*/
-            console.log(content);
-            $('#content').textbox('setValue',content);
-            //alert(content);
-        });
-    })
+    // $('.edit-a').click(function(){
+    //     $('#w').window('open').parent('.panel-htop').find('.panel-tool-close').on('click',function(){
+    //          var content=$('.easyui-texteditor').html();
+    //         /*console.log($('input[name="content"]:hidden').val());
+    //         console.log($('input[name="content"]:hidden').length);
+    //         $('input[name="content"]:hidden').val(content);*/
+    //         console.log(content);
+    //         $('#content').textbox('setValue',content);
+    //         //alert(content);
+    //     });
+    // })
 
 
     var gloableURL=window.parent.gloableURL;
@@ -90,7 +81,9 @@
         onSubmit:function(){
            if($(this).form('enableValidation').form('validate')){
                 var formData = $("#newsForm").serializeJSON();
+                $('.easyui-texteditor').html();
                 formData.newsId=newsId;
+                formData.content = $('.easyui-texteditor').html();
                 // 将当前页面的表单信息进行获取，然后进行ajax请求
                 if(formData._id.length > 0){
                     // update
@@ -176,6 +169,7 @@ function updateData(id,target){
         }).done(function(res){
             $('#newsForm').form('load',res);
             $('#dlg').dialog('open');
+            $('.easyui-texteditor').html(res.content);
         })
     }else{
         $.messager.confirm('提示','请选择一个修改子类');
