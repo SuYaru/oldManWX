@@ -130,17 +130,23 @@
         return false; // 阻止默认事件
     }
     function deleteData(){
-        $.messager.confirm('确认对话框', '你确认删除?', function(r){
-            var node = $('#tt').tree('getSelected');
-            $('#tt').tree('remove', node.target);
-            if (node._id!=undefined && r){
-                $.ajax({
-                    url:`${gloableURL}cate/${node._id}`,
-                    type:'delete'
-                }).done(function(res){
-                    $.messager.confirm('提示', '该节点及其子节点已经被删除！');
-                    $("#dlg").datagrid('reload');
-                })
+        $.messager.confirm({
+            title:'确认对话框',
+            msg:'你确认删除',
+            ok:"确认",
+            cancel:"取消",
+            fn:function(r){
+                var node = $('#tt').tree('getSelected');
+                $('#tt').tree('remove', node.target);
+                if (node._id!=undefined && r){
+                    $.ajax({
+                        url:`${gloableURL}cate/${node._id}`,
+                        type:'delete'
+                    }).done(function(res){
+                        $.messager.confirm('提示', '该节点及其子节点已经被删除！');
+                        $("#dlg").datagrid('reload');
+                    })
+                }
             }
         });
     }
