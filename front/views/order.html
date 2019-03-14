@@ -24,9 +24,9 @@
                     <a href="#" id="removesData" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">批量删除</a>
                 </div>
 
-                <div id="dlg" class="easyui-dialog" title="Basic Dialog" data-options="iconCls:'icon-save',closed: true" style="width:400px;padding:10px">
+                <div id="dlg" class="easyui-dialog" title="添加订单" data-options="iconCls:'icon-save',closed: true" style="width:400px;padding:10px">
                     <form id="orderForm" class="easyui-form" method="post" data-options="novalidate:true">
-                           <input   name="_id" style="width:100%">
+                           <input   name="_id" style="width:100%" type="hidden">
                         <!-- <input   name="orderId" style="width:100%"> -->
                         <div style="margin-bottom:20px">
                             <input class="easyui-textbox" name="ordername" style="width:100%" data-options="label:'订单名称:',required:true">
