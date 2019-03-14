@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Basic Layout - jQuery EasyUI Demo</title>
+	<title>新闻管理</title>
 	<link rel="stylesheet" type="text/css" href="../css/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="../css/themes/icon.css">
     <link rel="stylesheet" href="../jquery-easyui-texteditor/texteditor.css">
@@ -24,7 +24,12 @@
                 <a href="#" id="addData" class="easyui-linkbutton" data-options="iconCls:'icon-add'">新增</a>
                 <a href="#" id="removesData" class="easyui-linkbutton" data-options="iconCls:'icon-remove'">批量删除</a>
             </div>
+<<<<<<< HEAD
             <div id="dlg" class="easyui-dialog" title="新闻编辑" data-options="iconCls:'icon-save',closed: true" style="width:100%;height: 100%; padding:10px">
+=======
+            <div id="dlg" class="easyui-dialog" title="新闻编辑" data-options="iconCls:'icon-save',closed: true" style="width:400px;
+            padding:10px">
+>>>>>>> f6886ce72cd85a031f44c16fc0417204db5afb2e
                 <form id="newsForm" class="easyui-form" method="post" data-options="novalidate:true">
                         <input   name="_id" style="width:100%" type="hidden">
                     <div style="margin-bottom:20px; text-align: center">
@@ -172,7 +177,12 @@ function updateData(id,target){
             $('.easyui-texteditor').html(res.content);
         })
     }else{
-        $.messager.confirm('提示','请选择一个修改子类');
+        $.messager.confirm({
+            title:'提示',
+            msg:'请选择一个修改子类',
+            ok:"确认",
+            cancel:"取消"
+        });
     }
 
 
@@ -225,7 +235,12 @@ $("#addData").click(function(){
         })
         $('#dlg').dialog('open');
     }else{
-        $.messager.confirm('提示','请选择一个添加子类');
+        $.messager.confirm({
+            title:'提示',
+            msg:'请选择一个添加子类',
+            ok:"确认",
+            cancel:"取消"
+        });
     }
 })
 

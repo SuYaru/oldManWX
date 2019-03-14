@@ -2,13 +2,21 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Basic Layout - jQuery EasyUI Demo</title>
+	<title>分类管理</title>
 	<link rel="stylesheet" type="text/css" href="../css/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="../css/themes/icon.css">
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../js/jquery.serializejson.min.js"></script>
-
+    <style>
+        html,body{
+            height: 98%;
+            box-sizing: border-box;
+        }
+        /* .mmBk{
+            display: none;
+        } */
+    </style>
 </head>
 <body>
 
@@ -21,6 +29,7 @@
     </div>
 
     <ul id="tt"></ul>
+
     <div id="mm" class="easyui-menu" style="width:120px;">
         <div onclick="addData()" data-options="iconCls:'icon-add'">新增</div>
         <div onclick="deleteData()" data-options="iconCls:'icon-remove'">删除</div>
@@ -28,10 +37,13 @@
         <div onclick="expand()">展开</div>
         <div onclick="collapse()">收缩</div>
     </div>
+
+
     <!-- 添加节点的弹出框 -->
     <div id="dlg" class="easyui-dialog" title="新增节点" data-options="iconCls:'icon-save',closed: true" style="width:400px;padding:10px">
         <form id="cateform" class="easyui-form" method="post" data-options="novalidate:true">
             <input   name="_id" style="width:100%;display:none;" >
+            <input   name="type" style="width:100%;display:none;" >
             <div style="margin-bottom:20px">
                 <input class="easyui-textbox" name="text" style="width:100%" data-options="label:'节点名称:',required:true">
             </div>
@@ -41,14 +53,16 @@
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">重置</a>
         </div>
     </div>
+
 </body>
 </html>
 
 <script>
     var gloableURL=window.parent.gloableURL;
-
+    var node_type=1;
     $("#treeButtonGroup a").click(function(){
         var type = $(this).attr('data-type');
+        node_type=type;
         treeList(type);
     })
     function treeList(type){
@@ -69,12 +83,32 @@
     treeList(1);
     // 弹出添加节点框
     function addData(){
-        //console.log($('.validatebox-text').length);
-        $('.validatebox-text').each(function(index,value){
-            $(this).removeClass('validatebox-invalid');
-            $(this).parent('.easyui-fluid').removeClass('textbox-invalid');
+        // ajax 后台检测当前根节点是否存在
+        // 不存在则可以加入
+        // 存在则报错不能再添加
+        $.ajax({
+            url:`${gloableURL}cate/list/${node_type}`,
+            method:'post'
+        }).done(function(res){
+            // 再次添加内容时，文字区域有提示 无效
+            // 这里清空效果有问题，若没有树节点被选中，且有查询到该类型的根节点
+            if(!$('#tt').tree('getSelected') && res.length>0){
+                $.messager.confirm({
+                    title:"提示",
+                    msg:"当前模块根节点已经存在",
+                    ok:"确认",
+                    cancel:"取消"
+                });
+            }else{
+                $('#cateform').form('load',{type:node_type});
+                $('.validatebox-text').each(function(index,value){
+                    $(this).removeClass('validatebox-invalid');
+                    $(this).parent('.easyui-fluid').removeClass('textbox-invalid');
+                });
+                //$('.mmBk').css({display:"block",height:'100%',width:'100%',background:'rgba(0, 0, 0, 0.2)',position:'absolute',top: 0,left: 0});
+                $('#dlg').dialog('open');
+            }
         })
-        $('#dlg').dialog('open');
     }
     // 新增提交
     function submitForm(){
@@ -83,7 +117,8 @@
                 if($(this).form('enableValidation').form('validate')){
                     // 将当前页面的表单信息进行获取，然后进行ajax请求
                     var formData = $("#cateform").serializeJSON();
-                    if(formData._id.length > 0){
+                    console.log(formData);
+                    if(formData._id && formData._id.length > 0){
                         $.ajax({
                             url:`${gloableURL}cate/${formData._id}`,
                             type:'put',
@@ -97,8 +132,13 @@
                     }else{
                         var t = $('#tt');
                         var node = t.tree('getSelected');
-                        formData.parentId=node._id;
-                        formData.type=node.type;
+                        console.log(node);
+                        if(node){
+                            formData.parentId=node._id==null?null:node._id;
+                            formData.type=formData.type==null?node.type:formData.type;
+                        }
+
+                        console.log(formData);
                         t.tree('append', {
                             parent: (node?node.target:null),
                             data: [{
@@ -152,4 +192,18 @@
         var node = $('#tt').tree('getSelected');
         $('#tt').tree('expand',node.target);
     }
+
+    // 页面右键点击事件
+    $("body").bind("contextmenu", function(e){
+        e.preventDefault();
+        var target=e.target || window.event.target;
+        // 是Body 上的右键点击
+        console.log(target.nodeName=="BODY");
+        console.log($('.window').css("display"));
+        if(target.nodeName=="BODY" && e.which == 3 && $('.window').css("display") == "none" ){
+            $('#mm').css({display:'block',left:e.clientX+"px",top:e.clientY+"px"});
+        }
+        //return false;
+    })
+
 </script>
