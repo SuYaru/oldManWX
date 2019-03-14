@@ -60,12 +60,8 @@
     $('.cc').click(function(){
         $('#w').window('open').parent('.panel-htop').find('.panel-tool-close').on('click',function(){
              var content=$('#w .easyui-texteditor').html();
-            /*console.log($('input[name="content"]:hidden').val());
-            console.log($('input[name="content"]:hidden').length);
-            $('input[name="content"]:hidden').val(content);*/
             console.log(content);
             $('#content').textbox('setValue',content);
-            //alert(content);
         });
     })
 
@@ -185,8 +181,6 @@ function updateData(id,target){
             cancel:"取消"
         });
     }
-
-
 }
 
 function deleteDatas(){

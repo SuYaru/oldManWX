@@ -13,9 +13,6 @@
             height: 98%;
             box-sizing: border-box;
         }
-        /* .mmBk{
-            display: none;
-        } */
     </style>
 </head>
 <body>
@@ -117,14 +114,12 @@
                 if($(this).form('enableValidation').form('validate')){
                     // 将当前页面的表单信息进行获取，然后进行ajax请求
                     var formData = $("#cateform").serializeJSON();
-                    console.log(formData);
                     if(formData._id && formData._id.length > 0){
                         $.ajax({
                             url:`${gloableURL}cate/${formData._id}`,
                             type:'put',
                             data: formData
                         }).done(function(res){
-                            console.log("后续操作");
                             $('#dlg').dialog('close');
                             $('#dg').datagrid('reload');
                             $('#cateform').form('clear');
@@ -132,13 +127,10 @@
                     }else{
                         var t = $('#tt');
                         var node = t.tree('getSelected');
-                        console.log(node);
                         if(node){
                             formData.parentId=node._id==null?null:node._id;
                             formData.type=formData.type==null?node.type:formData.type;
                         }
-
-                        console.log(formData);
                         t.tree('append', {
                             parent: (node?node.target:null),
                             data: [{
@@ -197,9 +189,7 @@
     $("body").bind("contextmenu", function(e){
         e.preventDefault();
         var target=e.target || window.event.target;
-        // 是Body 上的右键点击
-        console.log(target.nodeName=="BODY");
-        console.log($('.window').css("display"));
+        // window 是弹出框，一个class 。后面主要如果有另外一个模版的类名也是 window 要注意冲突
         if(target.nodeName=="BODY" && e.which == 3 && $('.window').css("display") == "none" ){
             $('#mm').css({display:'block',left:e.clientX+"px",top:e.clientY+"px"});
         }
