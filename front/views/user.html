@@ -41,7 +41,8 @@
                     <input class="easyui-textbox" name="email" style="width:100%" data-options="label:'邮箱:',required:true,validType:'email'">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="interest" style="width:100%" data-options="label:'兴趣爱好:',required:true,validType:'interest'">
+                    <!-- <input class="easyui-tagbox" value="篮球,游戏" label="兴趣爱好:" data-options='required:true,multiple:true' style="width:100%"> -->
+                    <input class="easyui-tagbox" name="interest" id="interest" style="width:100%" data-options="label:'兴趣爱好:',multiple:true,required:true,validType:'interest'">
                 </div>
                <div style="margin-bottom:20px">
                     <input class="easyui-textbox" name="address" style="width:100%" data-options="label:'住址:',required:true,validType:'address'">
@@ -116,10 +117,8 @@
 
     // 日期格式转换
     function jsonYearMonthDay(val) {
-        console.log(val);
         if(val){
             var date = new Date(val);
-            console.log(date);
             var year = date.getFullYear().toString();
             var month = (date.getMonth() + 1);
             var day = date.getDate().toString();
@@ -162,8 +161,10 @@
             onSubmit:function(){
                 if($(this).form('enableValidation').form('validate')){
                     // 将当前页面的表单信息进行获取，然后进行ajax请求
+                    var inval = $("#interest").val();
                     var formData = $("#userform").serializeJSON();
-                    console.log(formData.know);
+                    formData.interest = inval;
+                    console.log(formData);
                     formData.know=formData.know=="了解"?true:false;
                     if(formData._id.length > 0){
                         // update
