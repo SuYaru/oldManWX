@@ -8,7 +8,11 @@
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../js/jquery.serializejson.min.js"></script>
-
+    <style>
+        html,body{
+            height: 100%    ;
+        }
+    </style>
 </head>
 <body>
 
@@ -32,6 +36,7 @@
     <div id="dlg" class="easyui-dialog" title="新增节点" data-options="iconCls:'icon-save',closed: true" style="width:400px;padding:10px">
         <form id="cateform" class="easyui-form" method="post" data-options="novalidate:true">
             <input   name="_id" style="width:100%;display:none;" >
+            <input   name="type" style="width:100%;display:none;" >
             <div style="margin-bottom:20px">
                 <input class="easyui-textbox" name="text" style="width:100%" data-options="label:'节点名称:',required:true">
             </div>
@@ -97,8 +102,9 @@
                     }else{
                         var t = $('#tt');
                         var node = t.tree('getSelected');
-                        formData.parentId=node._id;
-                        formData.type=node.type;
+                        formData.parentId=node._id==null?null:node._id;
+                        formData.type=formData.type==null?node.type:formData.type;
+                        console.log(formData);
                         t.tree('append', {
                             parent: (node?node.target:null),
                             data: [{
@@ -146,4 +152,41 @@
         var node = $('#tt').tree('getSelected');
         $('#tt').tree('expand',node.target);
     }
+
+    // 页面右键点击事件
+    $("body").mousedown(function(e) {
+        var e= e || window.event;
+        var target=e.target || window.event.target;
+
+        // body 内部除了节点内容之外，都是body 自身的内容----> 空白区
+        // 点击空白区 且 是右键点击---> 出现弹框，添加根节点
+        // 此时后台传入根节点的序号（查询当前有多少节点的父元素是null ）
+        // 统计出数量后，为新增节点默认提供下一编号
+        if(target.nodeName =="BODY" && e.which ==3 ){
+            // 打开右键点击事件
+            console.log(target.nodeName);
+            console.log(e.which);
+            $('#mm').css({display:'block',left:e.clientX+"px",top:e.clientY+"px"});
+
+            // ajax 后台查询一共有多少个根节点
+            $.ajax({
+                url:`${gloableURL}cate/countRoot`,
+                type:'post'
+            }).done(function(res){
+                // 再次添加内容时，文字区域有提示 无效
+                // 这里清空效果有问题
+                console.log(res);
+
+                // $('#dlg').dialog('close');
+                // $('#dg').datagrid('reload');
+                $('#cateform').form('load',res);
+            })
+
+        }
+        $(document).bind("contextmenu",function(e){
+            return false;
+        });
+        //return false;
+    })
+
 </script>

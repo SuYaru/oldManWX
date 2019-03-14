@@ -68,3 +68,9 @@ var Cate = require('../models/cate.model');
         res.json(data);
       })
   }
+
+  exports.countRoot=function(req,res,next){
+      Cate.find({parentId:null}).count(function(err,data){
+          res.json(data);
+      });
+  }

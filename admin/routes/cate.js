@@ -7,6 +7,7 @@ router.put('/:id', dataCtrl.update);
 router.delete('/:id', dataCtrl.remove);
 router.post('/list/:type', dataCtrl.list);
 router.get('/:id', dataCtrl.get);
+router.post('/countRoot', dataCtrl.countRoot);
 
 
 module.exports = router;
