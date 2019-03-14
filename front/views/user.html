@@ -166,6 +166,7 @@
     $("#addData").click(function(){
         console.log($('.validatebox-text').length);
         $('.validatebox-text').each(function(index,value){
+            clearForm();
             //console.log($('#userform'));
             //console.log ($(value));
             $(this).removeClass('validatebox-invalid');
