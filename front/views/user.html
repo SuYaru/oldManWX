@@ -14,6 +14,7 @@
     <div id="tb" style="padding:2px 5px;">
         <input id="searchFor" label="搜索内容:" style="width:30%;height:30px;margin:10px 0">
 
+<<<<<<< HEAD
         <a href="#" id="searchData" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
         <a href="#" id="addData" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>
         <a href="#" id="removesData" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="deleteDatas()">删除</a>
@@ -39,6 +40,57 @@
                 　
                 <input class="easyui-textbox" name="email" style="width:220px" data-options="label:'邮　　箱：',required:true,validType:'email'">
             </div>
+=======
+            <a href="#" id="searchData" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+            <a href="#" id="addData" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>
+            <a href="#" id="removesData" class="easyui-linkbutton" data-options="iconCls:'icon-remove'" onclick="deleteDatas()">删除</a>
+        </div>
+
+        <div id="dlg" class="easyui-dialog" title="用户信息" data-options="iconCls:'icon-save',closed: true" style="width:500px;padding:10px;">
+            <form id="userform" class="easyui-form" method="post" data-options="novalidate:true">
+                <input   name="_id" style="width:100%;display:none;">
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="name" style="width:220px" data-options="label:'用户名称:',required:true">
+                    　
+                    <input class="easyui-textbox" name="age" style="width:220px" data-options="label:'年　　龄:',required:true">
+                </div>
+
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="tel" style="width:220px" data-options="label:'电　　话:',required:true,validType:'tel'">
+                    　
+                    <input class="easyui-datebox" name="birthday" style="width:220px" data-options="label:'出生年月:',required:true">
+                </div>
+
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="card" style="width:220px" data-options="label:'身份证号:',required:true,validType:'card'">
+                    　
+                    <input class="easyui-textbox" name="email" style="width:220px" data-options="label:'邮　　箱：',required:true,validType:'email'">
+                </div>
+
+                <div style="margin-bottom:20px">
+                    <!-- <input class="easyui-tagbox" value="篮球,游戏" label="兴趣爱好:" data-options='required:true,multiple:true' style="width:100%"> -->
+                    <input class="easyui-tagbox" name="interest" id="interest" style="width:100%" data-options="label:'兴趣爱好:',multiple:true,required:true,validType:'interest'">
+                </div>
+               <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="address" style="width:100%" data-options="label:'住　　址:',required:true,validType:'address'">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input id="cc" style="width:220px" class="easyui-combobox" name="sex" data-options="required:true,valueField:'id',editable:false,textField:'text',panelHeight:80,label:'性　　别',valueField: 'label',
+                    textField: 'value',data: [{
+                        label: '男',
+                        value: '男'
+                    },{
+                        label: '女',
+                        value: '女'}]" />
+                        　
+                        <input id="cc" style="width:220px" class="easyui-combobox liaojie" name="know" data-options="required:true,valueField:'id',editable:false,textField:'text',panelHeight:80,label:'是否了解我们',valueField: 'label',
+                    textField: 'value',data: [{
+                        label: 'true',
+                        value: '了解'
+                    },{
+                        label: 'false',
+                        value: '不了解'}]" />
+>>>>>>> 8ef94e29b0e94248c6f6aadc61809d263528f0fd
 
             <div style="margin-bottom:20px">
                 <!-- <input class="easyui-tagbox" value="篮球,游戏" label="兴趣爱好:" data-options='required:true,multiple:true' style="width:100%"> -->
@@ -190,7 +242,6 @@
                     var inval = $("#interest").val();
                     var formData = $("#userform").serializeJSON();
                     formData.interest = inval;
-                    console.log(formData);
                     formData.know=formData.know=="了解"?true:false;
                     if(formData._id.length > 0){
                         // update
