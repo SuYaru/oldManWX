@@ -178,7 +178,12 @@ function updateData(id,target){
             $('#dlg').dialog('open');
         })
     }else{
-        $.messager.confirm('提示','请选择一个修改子类');
+        $.messager.confirm({
+            title:'提示',
+            msg:'请选择一个修改子类',
+            ok:"确认",
+            cancel:"取消"
+        });
     }
 
 
@@ -231,7 +236,12 @@ $("#addData").click(function(){
         })
         $('#dlg').dialog('open');
     }else{
-        $.messager.confirm('提示','请选择一个添加子类');
+        $.messager.confirm({
+            title:'提示',
+            msg:'请选择一个添加子类',
+            ok:"确认",
+            cancel:"取消"
+        });
     }
 })
 
