@@ -47,34 +47,21 @@
 
 
 <script>
-    //点击内容打开文本编辑器
-    // $('.edit-a').click(function(){
-    //     $('#w').window('open').parent('.panel-htop').find('.panel-tool-close').on('click',function(){
-    //          var content=$('.easyui-texteditor').html();
-    //         /*console.log($('input[name="content"]:hidden').val());
-    //         console.log($('input[name="content"]:hidden').length);
-    //         $('input[name="content"]:hidden').val(content);*/
-    //         console.log(content);
-    //         $('#content').textbox('setValue',content);
-    //         //alert(content);
-    //     });
-    // })
 
-
-    var gloableURL=window.parent.gloableURL;
-    // 显示左侧树状结构
-    var newsId = '';
-    $('#tt').tree({
-        url:`${gloableURL}cate/list/1`,
-        onClick:function(node){
-            $('#dg').datagrid({
-                queryParams: {
-                    newsId: node._id
-                }
-            });
-            newsId=node._id;
-        }
-    });
+var gloableURL=window.parent.gloableURL;
+// 显示左侧树状结构
+var newsId = '';
+$('#tt').tree({
+    url:`${gloableURL}cate/list/1`,
+    onClick:function(node){
+        $('#dg').datagrid({
+            queryParams: {
+                newsId: node._id
+            }
+        });
+        newsId=node._id;
+    }
+});
 
  function submitForm(){
     $('#newsForm').form('submit',{
@@ -124,7 +111,6 @@ $('#dg').datagrid({
     columns:[[
         {field:'ck',checkbox:true},
         {field:'title',title:'新闻标题',width:100},
-        {field:'content',title:'新闻内容',width:200},
         {field:'keyWords',title:'关键词',width:100},
         {field:'author',title:'撰稿人',width:100},
         {field:'_id',title:'操作', width:80,
@@ -208,7 +194,8 @@ function deleteDatas(){
 $("#searchData").click(function(){
     $('#dg').datagrid({
         queryParams: {
-            name: $("#name").val()
+            name: $("#name").val(),
+            newsId:newsId
         }
     });
     $("#searchFor").val("");

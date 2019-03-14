@@ -1,9 +1,5 @@
 var express = require('express');
 var router = express.Router();
-// var User=require('../models/user.model');   // 引入用户实例
-//const Cat = mongoose.model('Cat', { name: String });
-/* const mongoose = require('mongoose');
-mongoose.connect('mongodb://10.31.162.31:27017/test0307', {useNewUrlParser: true}); */
 var dataCtrl=require('../controllers/news.controllers');
 
 router.post('/',dataCtrl.create);

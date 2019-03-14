@@ -37,9 +37,7 @@ var Cate = require('../models/cate.model');
 
   // pid === parentId
   function reverseTree(data,pid){
-
     var result = [], temp;
-
     // data的对象是什么对象？model数据模型的对象
     // 数据模型的对象转成字符串，再转成对象，而这时候的对象变成了JsonObject
     var data = JSON.parse(JSON.stringify(data));

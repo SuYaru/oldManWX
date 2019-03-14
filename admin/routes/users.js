@@ -14,15 +14,4 @@ router.get('/:id',dataCtrl.getById);
 router.post('/removes',dataCtrl.removes);
 
 
-/*
-
-    http://localhost:3000/users/123     put
-    http://localhost:3000/users/123     delete
-    http://localhost:3000/users/123     get
-    http://localhost:3000/users/        post
-    http://localhost:3000/users/list    list
-
-    */
-
-
 module.exports = router;

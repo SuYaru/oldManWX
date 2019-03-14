@@ -27,19 +27,19 @@
                     　
                     <input class="easyui-textbox" name="age" style="width:220px" data-options="label:'年　　龄:',required:true">
                 </div>
-    
+
                 <div style="margin-bottom:20px">
                     <input class="easyui-textbox" name="tel" style="width:220px" data-options="label:'电　　话:',required:true,validType:'tel'">
                     　
                     <input class="easyui-datebox" name="birthday" style="width:220px" data-options="label:'出生年月:',required:true">
                 </div>
-    
+
                 <div style="margin-bottom:20px">
                     <input class="easyui-textbox" name="card" style="width:220px" data-options="label:'身份证号:',required:true,validType:'card'">
                     　
                     <input class="easyui-textbox" name="email" style="width:220px" data-options="label:'邮　　箱：',required:true,validType:'email'">
                 </div>
-    
+
                 <div style="margin-bottom:20px">
                     <input class="easyui-tagbox" name="interest" id="interest" style="width:100%" data-options="label:'兴趣爱好:',multiple:true,required:true,validType:'interest'">
                 </div>
@@ -62,9 +62,9 @@
                     },{
                         label: '不了解',
                         value: '不了解'}]" />
-    
+
                 </div>
-    
+
             </form>
             <div style="text-align:center;padding:5px 0">
                 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()" style="width:30%;display: inline-block;">提交</a>
@@ -157,10 +157,8 @@
             if (day < 10) {
                 day = "0" + day;
             }
-
             return year + "-" + month + "-" + day;
         }
-
     }
     // 1、 新增
     $("#addData").click(function(){
@@ -197,8 +195,6 @@
                         })
                     }else{
                         // add
-                        //console.log("单纯添加");
-                        console.log(formData);
                         delete formData._id;
                         $.ajax({
                             url:`${gloableURL}users`,
@@ -276,9 +272,7 @@
             url:`${gloableURL}users/${id}`,
             type:'get'
         }).done(function(res){
-            console.log(res.know);
             res.know=(res.know==true?"了解":"不了解");
-            console.log(res.know);
             $('#userform').form('load',res);
             $('#dlg').dialog('open');
         })

@@ -137,8 +137,16 @@ $('#dg').datagrid({
        /*  {field:'orderId',title:"订单Id"}, */
         {field:'ordername',title:'订单名称',width:160},
         {field:'details',title:'订单明细',width:260},
-        {field:'sdate',title:'开始时间',width:200},
-        {field:'fdate',title:'预计完成时间',width:200},
+        {field:'sdate',title:'开始时间',width:200,align:'center',
+                formatter:function(val,row,index){
+                    return changeYearMonthDay(val);
+                }
+        },
+        {field:'fdate',title:'预计完成时间',width:200,align:'center',
+                formatter:function(val,row,index){
+                    return changeYearMonthDay(val);
+                }
+        },
         {field:'progress',title:'订单进度',width:148,                      formatter:function(value,row,index){
                // return row.progress+"%";
                var bcolor='';
@@ -159,6 +167,21 @@ $('#dg').datagrid({
 		}
     ]]
 });
+function changeYearMonthDay(val) {
+    if(val){
+        var date = new Date(val);
+        var year = date.getFullYear().toString();
+        var month = (date.getMonth() + 1);
+        var day = date.getDate().toString();
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+        return year + "-" + month + "-" + day;
+    }
+}
 
 function deleteData(id){
     $.messager.confirm({

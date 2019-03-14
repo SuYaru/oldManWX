@@ -10,7 +10,6 @@ exports.create=function(req,res,next){
 exports.update=function(req,res,next){
     const id=req.params.id;
     Order.findByIdAndUpdate(id,{$set:req.body},{new:false}).then(data=>{
-        // console.log(data);
         res.json(data);
     });
 }
